@@ -46,7 +46,7 @@ Current Monday summary:
 
 ## Today's Bias — August 31, 2026
 
-**Conclusion:** the bias for today's close is **neutral to slightly bearish, with low confidence**. The historical pattern that most closely resembles today's opening conditions favors a decline by a small margin, while the complete set of Mondays has a slightly bullish bias. Therefore, the historical data does not support a strong prediction in either direction.
+**Combined conclusion:** today's directional outlook is **mixed and low-confidence**. The Monday pattern provides a slight bearish intraday tilt, while the 4-hour indicators provide bullish trend support. If one label is required for today's close, the bias is neutral with a slight bearish tilt; the broader 4-hour structure remains bullish while price holds above the `5.1663–5.1579` moving-average band.
 
 The comparison below uses the previous `1000` completed Mondays and excludes today's partial candle. In this snapshot, USD/BRL was trading at `5.1838`, down `0.0231%` from the previous close of `5.1850`.
 
@@ -62,6 +62,39 @@ The comparison below uses the previous `1000` completed Mondays and excludes tod
 ### Is Today's Behavior Different?
 
 In terms of direction, **no**: today's small decline is near the center of the historical distribution and is not unusual. The absence of an opening gap also matches the most common Monday behavior. The only meaningful difference is the extremely narrow range, but this is primarily due to the snapshot time and may disappear as the session progresses.
+
+## 4-Hour Indicator Context
+
+![USD/BRL 4-hour TradingView chart with CA_MA and RSI](trading-view/USDBRL.png)
+
+The chart was captured on August 31, 2026 at `10:52 UTC`. It uses the legacy [`CA_MA` Pine Script](script/ca-ma.pine) on the price panel and an RSI Divergence Indicator with a `14`-period RSI based on `close`.
+
+| Indicator evidence | Reading | Signal | Interpretation |
+|---|---:|:---:|---|
+| USD/BRL price | `5.1838` | Bullish versus the MA band | Price is `0.3387%` above the short average and `0.5021%` above the long average. |
+| CA_MA short average | `5.1663` | Bullish | The short average is rising and is `0.1629%` above the long average. |
+| CA_MA long average | `5.1579` | Bullish | The long average is also rising, so both components of the band support the upward structure. |
+| RSI `(14, close)` | `58.99` | Neutral/bullish | RSI is above the neutral `50` level and below the conventional `70` overbought level. Momentum remains positive without being overbought. |
+| Recent RSI behavior | Fell from above `70` to `58.99` | Caution | Momentum cooled after the latest price surge. This weakens the immediate upside case without reversing the broader positive reading. |
+| Recent 4-hour price action | Rejected near `5.23` and returned to `5.1838` | Short-term bearish | The rejection shows nearby selling pressure even though price remains above the moving-average band. |
+
+### Combined Pattern Assessment
+
+The historical and chart-based signals point in different directions:
+
+- The closest Monday pattern — no opening gap after a positive previous session — closed lower in `51.94%` of cases and higher in `47.00%`, which is only a weak bearish edge.
+- The CA_MA overlay remains bullish because price is above both averages, the short average is above the long average, and both are rising.
+- RSI at `58.99` confirms positive momentum, but its decline from above `70` and the rejection near `5.23` show that the latest bullish impulse is losing strength.
+
+The best synthesis is therefore **bullish trend structure with a neutral to slightly bearish short-term pullback**. A move below the `5.1663–5.1579` band would weaken the bullish structure shown in this snapshot; remaining above it preserves that structure.
+
+### CA_MA Implementation Note
+
+The script uses legacy Pine Script syntax and is configured in the screenshot with `close`, timeframe `W`, periods `50` and `100`, and calculation mode `2`, which the source maps to EMA.
+
+There is an important multi-timeframe limitation in the current implementation. It first requests the higher-timeframe price with `security(tickerid, res, pricetype)` and then calculates the moving averages from that mapped series. On a 4-hour chart, this is not equivalent to calculating the 50- and 100-period EMAs inside the weekly context. The displayed values should therefore be treated as this script's MTF moving-average band, not automatically as verified 50-week and 100-week EMAs. A modern implementation should calculate each average inside `request.security()`, explicitly choose whether to use live or confirmed higher-timeframe values, and document the repainting behavior. See [TradingView's higher-timeframe data documentation](https://www.tradingview.com/pine-script-docs/concepts/other-timeframes-and-data/).
+
+Despite the word “Alert” in the indicator's name, the source only draws background changes and Buy/Sell shapes. It does not define `alertcondition()` rules for native TradingView alerts.
 
 This outlook is exclusively statistical and technical and is based on the local dataset. It does not incorporate news, interest rates, currency flows, or the day's macroeconomic events, and it is not financial advice.
 
