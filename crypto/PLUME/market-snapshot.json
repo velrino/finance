@@ -1,0 +1,31 @@
+{
+  "source": "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=plume,ondo-finance",
+  "currency": "usd",
+  "note": "Provider-reported values; prices and market caps can use slightly different update times. Circulating supply is not an unlock calendar.",
+  "assets": [
+    {
+      "id": "ondo-finance",
+      "symbol": "ondo",
+      "current_price": 0.363498,
+      "market_cap": 1770977658,
+      "fully_diluted_valuation": 3637004316,
+      "total_volume": 115715983,
+      "circulating_supply": 4869330647.0,
+      "total_supply": 10000000000.0,
+      "max_supply": 10000000000.0,
+      "last_updated": "2026-11-10T20:33:54.000Z"
+    },
+    {
+      "id": "plume",
+      "symbol": "plume",
+      "current_price": 0.01298986,
+      "market_cap": 88632455,
+      "fully_diluted_valuation": 129992809,
+      "total_volume": 7806117,
+      "circulating_supply": 6818258282.0,
+      "total_supply": 10000000000.0,
+      "max_supply": 10000000000.0,
+      "last_updated": "2026-11-10T20:33:54.000Z"
+    }
+  ]
+}

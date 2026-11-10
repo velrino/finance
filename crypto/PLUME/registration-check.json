@@ -1,0 +1,12 @@
+{
+  "checkedAt": "2026-11-10T20:35:17.371998+00:00",
+  "source": "https://api.brokercheck.finra.org/search/firm?query=Kimber%20Digital%20Securities&nrows=10&start=0&wt=json",
+  "publicProfile": "https://brokercheck.finra.org/firm/summary/339774",
+  "firmName": "KIMBER DIGITAL SECURITIES",
+  "crd": "339774",
+  "secNumber": "8-71468",
+  "scope": "ACTIVE",
+  "approvedFinraRegistrationCount": 1,
+  "finraLastApprovalDate": "2026-10-27T00:00:00",
+  "scopeNote": "Public BrokerCheck search response; does not establish DTC membership, product availability, or token endorsement."
+}

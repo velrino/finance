@@ -62,6 +62,10 @@ python3 -m venv /tmp/finance-venv
 
 The script requires a candle labeled with the current São Paulo date and fails rather than publishing stale data; weekends or feed outages may therefore block a refresh. Its internal TradingView feed is undocumented and may change. The 5,000-candle window rolls forward. `isComplete` is a conservative date-based flag; the current day's candle stays excluded even after the local close. Daily zero volume is provider data, not proof of no trading.
 
+## Crypto research
+
+[PLUME regulatory summary](crypto/PLUME/README.md) · [Plume versus Ondo: AI correction scenarios](crypto/PLUME/OUTLOOK.md). Research dated November 10, 2026.
+
 ## Sources and scope
 
 [TradingView USD/BRL](https://www.tradingview.com/symbols/USDBRL/) · [4-hour chart](https://www.tradingview.com/chart/?symbol=FX_IDC%3AUSDBRL&interval=240) · [Scanner endpoint](https://scanner.tradingview.com/forex/scan).
