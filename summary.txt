@@ -1,0 +1,10 @@
+USD/BRL — 2026-11-10 — coleta 2026-11-10T20:33:22Z
+
+TL;DR: dólar a R$ 5.5817, variação de +1.3491% contra o fechamento anterior. Candle diário ainda parcial.
+
+Leitura: estrutura de alta no gráfico de 4 horas. EMA50: 5.4515; EMA100: 5.3535; RSI14: 76.49.
+RSI acima de 70 indica sobrecompra, mas não confirma reversão. Há risco de realização após a alta.
+
+Dia da semana: Tuesday. Estatísticas apenas de sessões completas desse dia: 998, alta em 46.69%, retorno mediano -0.0327%. Frequências históricas não são uma previsão validada.
+
+Os níveis e conclusões de agosto foram substituídos. Não há base personalizada para determinar quanto realizar ou manter. Fontes, metodologia e dados: README.md e symbol/.

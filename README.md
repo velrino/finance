@@ -1,104 +1,69 @@
 # Finance Data
 
-This repository currently stores a USD/BRL historical analysis snapshot at:
+**TL;DR:** 2026-11-10 snapshot: USD/BRL **5.5817**, **+1.3491%** versus the previous close. Bullish 4-hour structure, with elevated pullback risk. Today's candle is partial; weekday statistics exclude it.
 
-```text
-symbol/usd-brl.json
+## Current USD/BRL snapshot
+
+Collected at **2026-11-10T20:33:22Z**. Quote timestamp: **2026-11-10T20:33:20Z**. TradingView session: `market`. This is an intraday snapshot, not today's final close or a PTAX fixing.
+
+| Reading | Value |
+|---|---:|
+| Session date / weekday | 2026-11-10 / Tuesday |
+| Latest daily-candle price | 5.5817 BRL |
+| Previous close | 5.5074 BRL |
+| Open / high / low | 5.5078 / 5.6130 / 5.5078 |
+| Change versus previous close | +1.3491% |
+| Opening gap | +0.0073% |
+| Daily history | 5,000 candles, 2007-09-06 to 2026-11-10 |
+
+Daily candles, scanner readings, quotes and chart are asynchronous snapshots and can differ slightly. Scanner values have their own fields in the JSON; do not substitute them for the candle close.
+
+## Today's historical comparison
+
+Today is **Tuesday**. Monday statistics remain available for research, but are not today's weekday signal.
+
+| Completed sessions | Count | Up | Down | Mean return | Median return |
+|---|---:|---:|---:|---:|---:|
+| Tuesday | 998 | 46.69% | 51.80% | -0.0517% | -0.0327% |
+| Monday | 1001 | 52.35% | 45.85% | +0.1045% | +0.0330% |
+
+Returns compare each session's close with the previous trading close. Flat sessions explain any gap to 100%. Historical frequencies are descriptive, not a calibrated probability for today's close; no predictive edge or trading strategy has been validated.
+
+## Updated 4-hour context
+
+![USD/BRL 4-hour candles, standard EMAs and RSI](trading-view/USDBRL.png)
+
+The chart is generated from the refreshed TradingView candles, not a TradingView screenshot. Its latest candle may be partial.
+
+| Indicator | Reading |
+|---|---:|
+| Standard 4h EMA50 | 5.4515 |
+| Standard 4h EMA100 | 5.3535 |
+| Wilder RSI14 | 76.49 |
+
+**Interpretation:** bullish 4-hour structure, with elevated pullback risk. RSI is above 70: momentum is strong, but overbought conditions can persist and do not confirm a reversal. The EMA band is a trend reference, not guaranteed support. A loss of the band would weaken the current structure. This snapshot does not justify a personalized sell or hold decision.
+
+### Legacy CA_MA
+
+[The original Pine script](script/ca-ma.pine) is preserved. Its August values are superseded. It smooths a mapped higher-timeframe price series, so its output is not equivalent to true weekly EMA50/100. This refresh uses explicitly labeled standard 4h indicators instead; no current legacy CA_MA value is claimed. See [TradingView's multi-timeframe documentation](https://www.tradingview.com/pine-script-docs/concepts/other-timeframes-and-data/).
+
+## Files and refresh
+
+- [Daily candles, quote, scanner and completed-session statistics](symbol/usd-brl.json)
+- [4-hour candles and reproducible indicator readings](symbol/usd-brl-4h.json)
+- [Portuguese summary](summary.txt)
+- [Refresh script](script/update-usd-brl.py)
+
+```sh
+python3 -m venv /tmp/finance-venv
+/tmp/finance-venv/bin/pip install -r script/requirements.txt
+/tmp/finance-venv/bin/python script/update-usd-brl.py
 ```
 
-## USD/BRL Dataset
+The script requires a candle labeled with the current São Paulo date and fails rather than publishing stale data; weekends or feed outages may therefore block a refresh. Its internal TradingView feed is undocumented and may change. The 5,000-candle window rolls forward. `isComplete` is a conservative date-based flag; the current day's candle stays excluded even after the local close. Daily zero volume is provider data, not proof of no trading.
 
-The `symbol/usd-brl.json` file contains daily USD/BRL candles for `FX_IDC:USDBRL`.
-It was generated on `2026-08-31T10:26:50Z` from TradingView's chart websocket.
+## Sources and scope
 
-The snapshot includes:
+[TradingView USD/BRL](https://www.tradingview.com/symbols/USDBRL/) · [4-hour chart](https://www.tradingview.com/chart/?symbol=FX_IDC%3AUSDBRL&interval=240) · [Scanner endpoint](https://scanner.tradingview.com/forex/scan).
 
-- `5000` daily candles
-- Date range from `2007-06-27` to `2026-08-31`
-- Daily `open`, `high`, `low`, `close`, and `volume`
-- Computed weekday fields such as `weekday` and `isMonday`
-- Computed return fields:
-  - `closeToCloseChangePct`
-  - `openToCloseChangePct`
-  - `gapFromPreviousClosePct`
-  - `rangePct`
-- Aggregated weekday statistics in `weekdayStats`
-- A focused Monday analysis summary in `mondayPattern`
-- The last 12 Monday records in `mondayPattern.last12Mondays`
-
-## Monday Pattern Summary
-
-The Monday pattern is measured in two ways:
-
-- `closeToCloseChangePct`: Monday close compared with the previous trading day's close.
-- `openToCloseChangePct`: Monday close compared with Monday open.
-
-Current Monday summary:
-
-```json
-{
-  "mondayBars": 1001,
-  "averageCloseToCloseChangePct": 0.098448,
-  "medianCloseToCloseChangePct": 0.036303,
-  "positiveRate": 0.5225
-}
-```
-
-## Today's Bias — August 31, 2026
-
-**Combined conclusion:** today's directional outlook is **mixed and low-confidence**. The Monday pattern provides a slight bearish intraday tilt, while the 4-hour indicators provide bullish trend support. If one label is required for today's close, the bias is neutral with a slight bearish tilt; the broader 4-hour structure remains bullish while price holds above the `5.1663–5.1579` moving-average band.
-
-The comparison below uses the previous `1000` completed Mondays and excludes today's partial candle. In this snapshot, USD/BRL was trading at `5.1838`, down `0.0231%` from the previous close of `5.1850`.
-
-| Evidence | Historical result or today's reading | Signal | Interpretation |
-|---|---:|:---:|---|
-| All completed Mondays | Up in `52.30%`, down in `45.90%`; mean return of `+0.0986%` and median return of `+0.0365%` | Slightly bullish | There is a small historical advantage for an upward move, but `52.30%` is close to a random outcome. |
-| Monday after a positive previous session | `496` cases; up in `49.40%`, down in `49.60%`; median return of `0.0000%` | Neutral | Friday's `+0.4436%` gain does not, by itself, create reliable continuation on Monday. |
-| Monday with no opening gap | `570` cases; up in `48.25%`, down in `49.47%`; median return of `0.0000%` | Neutral/slightly bearish | Today's opening gap was `0.0000%`. Opening without a gap is common (`57.00%` of Mondays) and does not provide a strong directional signal. |
-| Monday with no gap after a positive session — the closest match to today | `283` cases; up in `47.00%`, down in `51.94%`; mean return of `+0.0335%` and median return of `-0.0592%` | Slightly bearish | Both the majority of outcomes and the median favor a decline, but the difference is small and the mean remains positive because of larger upward moves. |
-| Today's move versus the previous close | `-0.0231%`, at the `44.7th` percentile of historical Mondays | Slightly bearish | Trading below both the opening price and the previous close favors a decline at this point, but the move is normal and very small. |
-| Today's candle range | `0.0231%`, versus a historical median of `1.1461%`; `0.9th` percentile | Inconclusive | This is the main difference from the historical pattern and is explained by the candle still being in progress. It should not be interpreted as low volatility for the entire day. |
-
-### Is Today's Behavior Different?
-
-In terms of direction, **no**: today's small decline is near the center of the historical distribution and is not unusual. The absence of an opening gap also matches the most common Monday behavior. The only meaningful difference is the extremely narrow range, but this is primarily due to the snapshot time and may disappear as the session progresses.
-
-## 4-Hour Indicator Context
-
-![USD/BRL 4-hour TradingView chart with CA_MA and RSI](trading-view/USDBRL.png)
-
-The chart was captured on August 31, 2026 at `10:52 UTC`. It uses the legacy [`CA_MA` Pine Script](script/ca-ma.pine) on the price panel and an RSI Divergence Indicator with a `14`-period RSI based on `close`.
-
-| Indicator evidence | Reading | Signal | Interpretation |
-|---|---:|:---:|---|
-| USD/BRL price | `5.1838` | Bullish versus the MA band | Price is `0.3387%` above the short average and `0.5021%` above the long average. |
-| CA_MA short average | `5.1663` | Bullish | The short average is rising and is `0.1629%` above the long average. |
-| CA_MA long average | `5.1579` | Bullish | The long average is also rising, so both components of the band support the upward structure. |
-| RSI `(14, close)` | `58.99` | Neutral/bullish | RSI is above the neutral `50` level and below the conventional `70` overbought level. Momentum remains positive without being overbought. |
-| Recent RSI behavior | Fell from above `70` to `58.99` | Caution | Momentum cooled after the latest price surge. This weakens the immediate upside case without reversing the broader positive reading. |
-| Recent 4-hour price action | Rejected near `5.23` and returned to `5.1838` | Short-term bearish | The rejection shows nearby selling pressure even though price remains above the moving-average band. |
-
-### Combined Pattern Assessment
-
-The historical and chart-based signals point in different directions:
-
-- The closest Monday pattern — no opening gap after a positive previous session — closed lower in `51.94%` of cases and higher in `47.00%`, which is only a weak bearish edge.
-- The CA_MA overlay remains bullish because price is above both averages, the short average is above the long average, and both are rising.
-- RSI at `58.99` confirms positive momentum, but its decline from above `70` and the rejection near `5.23` show that the latest bullish impulse is losing strength.
-
-The best synthesis is therefore **bullish trend structure with a neutral to slightly bearish short-term pullback**. A move below the `5.1663–5.1579` band would weaken the bullish structure shown in this snapshot; remaining above it preserves that structure.
-
-### CA_MA Implementation Note
-
-The script uses legacy Pine Script syntax and is configured in the screenshot with `close`, timeframe `W`, periods `50` and `100`, and calculation mode `2`, which the source maps to EMA.
-
-There is an important multi-timeframe limitation in the current implementation. It first requests the higher-timeframe price with `security(tickerid, res, pricetype)` and then calculates the moving averages from that mapped series. On a 4-hour chart, this is not equivalent to calculating the 50- and 100-period EMAs inside the weekly context. The displayed values should therefore be treated as this script's MTF moving-average band, not automatically as verified 50-week and 100-week EMAs. A modern implementation should calculate each average inside `request.security()`, explicitly choose whether to use live or confirmed higher-timeframe values, and document the repainting behavior. See [TradingView's higher-timeframe data documentation](https://www.tradingview.com/pine-script-docs/concepts/other-timeframes-and-data/).
-
-Despite the word “Alert” in the indicator's name, the source only draws background changes and Buy/Sell shapes. It does not define `alertcondition()` rules for native TradingView alerts.
-
-This outlook is exclusively statistical and technical and is based on the local dataset. It does not incorporate news, interest rates, currency flows, or the day's macroeconomic events, and it is not financial advice.
-
-## Source Note
-
-TradingView loads candle history through an internal, undocumented chart feed.
-This dataset should be treated as an analysis snapshot, not as a stable production API integration.
+Statistical and technical analysis only. No macroeconomic forecast, verified predictive model, or personalized investment recommendation.
